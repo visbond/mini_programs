@@ -8,6 +8,7 @@ from pdfminer.pdfdocument import PDFDocument
 from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfinterp import resolve1
 
+
 def PDFPageCount(filename):
     # print("DEBUG entered PDFPageCount() with", filename)
     with open(filename, 'rb') as file:
@@ -15,17 +16,22 @@ def PDFPageCount(filename):
         document = PDFDocument(parser)
 
         # Notes on code below: document.catalog is a dictionary with many properties of the PDF
-        # many values are listed as PDF objects. They need to be resolved
-        # via the resolve function below to convert to exact value (often another dictionary)
+        # many values are listed as PDF objects rather than actual values. They need to be resolved
+        # via the resolve1 function to convert to exact value (often another dictionary)
 
         # print("DEBUG", document.catalog)
         pages = document.catalog['Pages']
-    return resolve1(pages)['Count']
+        pagecount = resolve1(pages)['Count']
+    return pagecount
 
-print("Current working directory is ", os.getcwd())
-cwd = os.getcwd()
-for filename in os.listdir(cwd):
-    if filename.endswith(".pdf") or filename.endswith(".PDF"):
-        print(filename, PDFPageCount(filename))
-    else:  # is satisfying to account for all logical branches, even empty ones
-        continue
+
+if __name__ == '__main__':
+    print("Current working directory is ", os.getcwd())
+    cwd = os.getcwd()
+    for filename in os.listdir(cwd):
+        if filename.endswith(".pdf") or filename.endswith(".PDF"):
+            print(filename, PDFPageCount(filename))
+
+        # is satisfying to account for all logical branches, even if currently empty (<something zen about finding fullness in emptiness here>
+        else:
+            continue
