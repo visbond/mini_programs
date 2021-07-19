@@ -9,19 +9,18 @@ from pdfminer.pdfpage import PDFPage
 from pdfminer.pdfinterp import resolve1
 
 def PDFPageCount(filename):
-    # print("[INFO] entered PDFPageCount() with", filename)
-    file = open(filename, 'rb')
-    parser = PDFParser(file)
-    document = PDFDocument(parser)
+    # print("DEBUG entered PDFPageCount() with", filename)
+    with open(filename, 'rb') as file:
+        parser = PDFParser(file)
+        document = PDFDocument(parser)
 
-    # Notes on code below: document.catalog is a dictionary with many properties of the PDF
-    # many values are listed as PDF objects. They need to be resolved
-    # via the resolve function below to convert to exact value (often another dictionary)
+        # Notes on code below: document.catalog is a dictionary with many properties of the PDF
+        # many values are listed as PDF objects. They need to be resolved
+        # via the resolve function below to convert to exact value (often another dictionary)
 
-    # print("[INFO]", document.catalog)
-    pages = document.catalog['Pages']
+        # print("DEBUG", document.catalog)
+        pages = document.catalog['Pages']
     return resolve1(pages)['Count']
-
 
 print("Current working directory is ", os.getcwd())
 cwd = os.getcwd()
