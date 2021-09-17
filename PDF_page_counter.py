@@ -30,7 +30,7 @@ if __name__ == '__main__':
     cwd = os.getcwd()
     for filename in os.listdir(cwd):
         if filename.endswith(".pdf") or filename.endswith(".PDF"):
-            print(filename, PDFPageCount(filename))
+            print(filename, PDFPageCount(filename), sep = ';')
 
         # is satisfying to account for all logical branches, even if currently empty (<something zen about finding fullness in emptiness here>
         else:
